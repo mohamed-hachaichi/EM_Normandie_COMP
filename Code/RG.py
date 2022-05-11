@@ -42,9 +42,8 @@ def scrape_institution_members(institution: str):
                 time.sleep(2) # use proxies and captcha solver instead of this
                 page_num += 1 # increment a one. Pagination
 
-        print(json.dumps(institution_memebers, indent=2, ensure_ascii=False))
-        print(len(institution_memebers)) # 624 from a EM-Normandie-Business-School
-      
+        # print(json.dumps(institution_memebers, indent=2, ensure_ascii=False))
+        # print(len(institution_memebers)) # 624 from a EM-Normandie-Business-School
 
         browser.close()
 
@@ -52,9 +51,13 @@ def scrape_institution_members(institution: str):
         you can also render the page and extract data from the inline JSON string,
         however, it's messy and from my perspective, it is easier to scrape the page directly.
         """
+        df = pd.DataFrame(institution_memebers)
+        df.to_csv("ResearchGate/ResearchGate.csv", index=False)
 
         # https://regex101.com/r/8qjfnH/1
         # extracted_data = re.findall(r"\s+RGCommons\.react\.mountWidgetTree\(({\"data\":{\"menu\".*:true})\);;",
         #                        str(page.content()))[0]
         # json_data = json.loads(extracted_data)
         # print(json_data)
+
+scrape_institution_members(institution="EM-Normandie-Business-School")
